@@ -2,7 +2,7 @@ use std::fs;
 
 fn main() {
     let input = fs::read_to_string("input.txt").unwrap();
-    let input: Vec<&str> = input.split("\r\n").collect();
+    let input: Vec<&str> = input.lines().collect();
 
     println!("{}", puzzle_one(&input));
     println!("{}", puzzle_two(&input));
