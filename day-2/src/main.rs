@@ -31,6 +31,7 @@ const ELF_BAG: Bag = (12, 13, 14);
 fn does_round_match_bag(round: &str) -> bool {
     round.split(", ").all(|color| {
         let num_cubes = num_cubes_of_color(color);
+
         match color.chars().last().unwrap() {
             'd' => num_cubes <= ELF_BAG.0, // Red
             'n' => num_cubes <= ELF_BAG.1, // Green
@@ -66,16 +67,15 @@ fn puzzle_two(input: &[&str]) -> u32 {
 }
 
 fn bag_of_round(round: &str) -> Bag {
-    let mut bag = Bag::default();
-
-    for color in round.split(", ") {
+    round.split(", ").fold(Bag::default(), |mut bag, color| {
         let num_cubes = num_cubes_of_color(color);
-        match color.chars().last().unwrap() {
-            'd' => bag.0 = num_cubes,
-            'n' => bag.1 = num_cubes,
-            _ => bag.2 = num_cubes,
-        }
-    }
 
-    bag
+        match color.chars().last().unwrap() {
+            'd' => bag.0 = num_cubes, // Red
+            'n' => bag.1 = num_cubes, // Green
+            _ => bag.2 = num_cubes,   // Blue
+        }
+
+        bag
+    })
 }
