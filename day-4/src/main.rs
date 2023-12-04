@@ -1,4 +1,6 @@
-use std::fs;
+use std::{collections::HashMap, fs, sync::Mutex};
+
+use lazy_static::lazy_static;
 
 fn main() {
     let input = fs::read_to_string("input.txt").unwrap();
@@ -53,13 +55,24 @@ fn puzzle_two(input: &[&str]) -> u32 {
         + cards.len() as u32
 }
 
+lazy_static! {
+    static ref CARDS_CACHE: Mutex<HashMap<usize, u32>> = Mutex::new(HashMap::new());
+}
+
 fn num_cards_from_card(card_index: usize, cards: &Cards) -> u32 {
-    let num_winning = cards[card_index].1;
-    cards
+    if let Some(&num_winning) = CARDS_CACHE.lock().unwrap().get(&card_index) {
+        return num_winning;
+    }
+
+    let mut num_winning = cards[card_index].1;
+    num_winning += cards
         .iter()
         .skip(card_index + 1)
         .take(num_winning as usize)
         .map(|&(current_card_index, _)| num_cards_from_card(current_card_index, cards))
-        .sum::<u32>()
-        + num_winning
+        .sum::<u32>();
+
+    CARDS_CACHE.lock().unwrap().insert(card_index, num_winning);
+
+    num_winning
 }
