@@ -71,8 +71,7 @@ impl Almanac {
         self.layers.iter().fold(seed, |current_seed, layer| {
             let new_seed = layer
                 .iter()
-                .filter_map(|range| range.convert_seed(current_seed))
-                .next();
+                .find_map(|range| range.convert_seed(current_seed));
 
             new_seed.unwrap_or(current_seed)
         })
