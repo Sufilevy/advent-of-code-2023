@@ -100,5 +100,5 @@ fn any_neighbors(
 }
 
 fn puzzle_two(input: &[&str]) -> u32 {
-    0
+    0 // I'm not stuck or anything, I know how to do this part. I'm just lazy.
 }
