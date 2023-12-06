@@ -27,7 +27,7 @@ fn options_for_race(race: (f64, f64)) -> u32 {
     let d = b.powi(2) - 4.0 * a * c;
     let solution1 = (-b - d.sqrt()) / (2.0 * a);
     let solution2 = (-b + d.sqrt()) / (2.0 * a);
-    ((solution2 - 0.001).floor() - solution1.floor()) as u32
+    (solution2.floor() - solution1.ceil()) as u32 + 1
 }
 
 fn puzzle_two(input: &[&str]) -> u32 {
