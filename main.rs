@@ -8,10 +8,10 @@ fn main() {
     println!("{}", puzzle_two(&input));
 }
 
-fn puzzle_one(input: &[&str]) -> u32 {
+fn puzzle_one(_input: &[&str]) -> u32 {
     0
 }
 
-fn puzzle_two(input: &[&str]) -> u32 {
+fn puzzle_two(_input: &[&str]) -> u32 {
     0
 }
