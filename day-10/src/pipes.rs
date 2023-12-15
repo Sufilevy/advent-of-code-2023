@@ -132,19 +132,17 @@ impl Pipes {
                 let mut crossings = 0;
                 line.chars()
                     .enumerate()
-                    .map(|(x, char)| match char {
-                        'S' | '|' | 'F' | '7' if pipes_loop.contains(&(y, x)) => {
-                            crossings += 1;
+                    .map(|(x, char)| {
+                        if pipes_loop.contains(&(y, x)) {
+                            if matches!(char, 'S' | '|' | 'F' | '7') {
+                                crossings += 1;
+                            }
+                            0
+                        } else if crossings % 2 != 0 {
+                            1
+                        } else {
                             0
                         }
-                        _ if !pipes_loop.contains(&(y, x)) => {
-                            if crossings % 2 != 0 {
-                                1
-                            } else {
-                                0
-                            }
-                        }
-                        _ => 0,
                     })
                     .sum::<u32>()
             })
