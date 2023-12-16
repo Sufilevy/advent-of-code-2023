@@ -3,6 +3,7 @@ mod mirrors;
 use std::fs;
 
 use mirrors::{Direction, Mirrors};
+use rayon::prelude::*;
 
 fn main() {
     let input = fs::read_to_string("input.txt").unwrap();
@@ -26,6 +27,7 @@ fn puzzle_two(input: &[&str]) -> u32 {
         .iter()
         .map(|&(col, dir)| {
             (0..rows)
+                .into_par_iter()
                 .map(|row| {
                     let mut mirrors = mirrors.clone();
                     mirrors.advance_beam((row, col), dir);
@@ -41,6 +43,7 @@ fn puzzle_two(input: &[&str]) -> u32 {
         .iter()
         .map(|&(row, dir)| {
             (0..cols)
+                .into_par_iter()
                 .map(|col| {
                     let mut mirrors = mirrors.clone();
                     mirrors.advance_beam((row, col), dir);
