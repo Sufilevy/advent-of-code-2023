@@ -1,5 +1,7 @@
 mod crucibles;
+
 use std::fs;
+use crate::crucibles::City;
 
 fn main() {
     let input = fs::read_to_string("input.txt").unwrap();
@@ -9,8 +11,8 @@ fn main() {
     println!("{}", puzzle_two(&input));
 }
 
-fn puzzle_one(_input: &[&str]) -> u32 {
-    0
+fn puzzle_one(input: &[&str]) -> u32 {
+    City::from(input).get_best_path_cost()
 }
 
 fn puzzle_two(_input: &[&str]) -> u32 {
